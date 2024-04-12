@@ -1,0 +1,386 @@
+Question No: 1
+
+Build a shopping cart for an e-commerce website. Your objective is to implement a Java class called "Cart" that represents the user's shopping cart. The "Cart" class should have a List attribute to store the items added to the cart. Additionally, you need to implement methods that allow adding items to the cart, removing items from the cart, calculating the total price of the items in the cart.
+Here are the detailed requirements for the "Cart" class:
+1. The "Cart" class should have a private List attribute to store the items in the cart. You can use any implementation of List, such as ArrayList.
+2. Implement a public method called "addItem" that takes an object of the "Item" class as a parameter and adds it to the cart.
+3. Implement a public method called "removeItem" that takes an object of the "Item" class as a parameter and removes it from the cart if it exists.
+4. Implement a public method called "calculateTotalPrice" that calculates and returns the total price of all items in the cart.
+Additionally, you need to implement a separate class called "Item" that represents an individual item in the shopping cart. The "Item" class should have the following attributes:
+- String name: Represents the name of the item.
+- double price: Represents the price of the item.
+Write the code for the "Cart" class and the "Item" class in Java, including the necessary methods to fulfill the requirements mentioned above.
+Input format :
+The first input is an integer representing the number of items to add.
+The second input is a string representing the name of the item.
+The third input is a double representing the price of the item.
+The fourth input is an integer representing the number of items to remove.
+The fifth input is a string representing the name of the item to remove.
+Output format :
+The output displays the Total Price after removing items.
+Sample test cases :
+Input 1 :
+2
+Laptop
+999.99
+Headphones
+49.99
+1
+Laptop
+Output 1 :
+Total Price after removing items: $49.99
+Whitelist
+Set 1:
+Cart
+addItem
+removeItem
+calculateTotalPrice
+
+// You are using Java
+import java.util.*;
+class Item
+{
+    String name;
+    double price;
+    Item(String name, double price)
+    {
+        this.name = name;
+        this.price = price;
+    }
+    
+}
+class Cart
+{
+    private List<Item> items;
+    public Cart()
+    {
+        items = new ArrayList<>();
+    }
+    public void addItem(Item i)
+    {
+        items.add(i);
+    }
+    public void removeItem(String s)
+    {
+        for(int i=0 ; i<items.size() ; i++)
+        {
+            if(items.get(i).name.equals(s))
+            {
+                items.remove(i);
+            }
+        }
+    }
+    public double calculateTotalPrice()
+    {
+        double tot = 0.0;
+        for(int i=0 ; i<items.size() ; i++)
+        {
+            tot += items.get(i).price;
+        }
+        return tot;
+    }
+}
+class Main
+{
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine();
+        Cart c = new Cart();
+        for(int i=0 ; i<n ; i++)
+        {
+            String name = sc.nextLine();
+            double price = sc.nextDouble();
+            sc.nextLine();
+            Item it = new Item(name, price);
+            c.addItem(it);
+        }
+        int k = sc.nextInt();
+        sc.nextLine();
+        for(int i=0 ; i<k ; i++)
+        {
+            String name = sc.nextLine();
+            c.removeItem(name);
+        }
+        double tot = c.calculateTotalPrice();
+        System.out.println("Total Price after removing items: $"+tot);
+    }
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question No: 2
+reportIcon
+Single File Programming Question
+You are developing a banking application that processes customer account transactions. As part of the application, you need to validate the withdrawal amount entered by the user. If the withdrawal amount is greater than the available balance, it should throw a custom exception called "InsufficientBalanceException" with an appropriate error message.
+Write a Java program that implements the above scenario. The program should prompt the user to enter the withdrawal amount and the available balance. If the withdrawal amount exceeds the available balance, it should throw the "InsufficientBalanceException" and display an error message. Otherwise, it should display a success message indicating that the transaction was successful.
+Your task is to write the code that handles the user input, performs the validation, and throws the custom exception when necessary.
+Input format :
+The first line of input is a double value representing the available balance of the account.
+The second line of input is a double value representing the withdrawal amount.
+Output format :
+The output displays the message "Transaction successful." if balance>=withdrawal and else "Insufficient balance: Insufficient balance to perform the withdrawal."
+Sample test cases :
+Input 1 :
+900
+500
+Output 1 :
+Transaction successful.
+Input 2 :
+500
+900
+Output 2 :
+Insufficient balance: Insufficient balance to perform the withdrawal.
+Whitelist
+Set 1:
+Exception
+InsufficientBalanceException
+extends
+
+// You are using Java
+import java.util.*;
+import java.lang.*;
+class InsufficientBalanceException extends Exception{
+    InsufficientBalanceException(){
+        super("Insufficient balance: Insufficient balance to perform the withdrawal.");
+    }
+}
+class Main{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        double a=sc.nextDouble();
+        double b=sc.nextDouble();
+        try{
+            if(a<b){
+                throw new InsufficientBalanceException();
+            }
+            System.out.println("Transaction successful.");
+        }
+        catch(InsufficientBalanceException e){
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question No: 3
+reportIcon
+Single File Programming Question
+Telecom Management System
+The Telecom Management System will cater to the needs of telecom service providers, administrators, customer support representatives, and customers. It will encompass modules for customer registration, service activation, service modification, billing and invoicing, network monitoring, and reporting.
+Create a customer Entity with the Following attributes
+TableName : customer
+customer ( customer_id INT PRIMARY KEY, name VARCHAR(50) NOT NULL, contact_information VARCHAR(100), subscription_plan VARCHAR(50), payment_history VARCHAR(50))
+Note:payment_history should be paid or unpaid
+Perform the below operations through the Java application
+· Insert Student details.
+· Update Student details.
+· Show all Student details.
+NOTE: The Table is created and some tuples have been already inserted into the table
+id range is between 100 to 106.
+Input format :
+The input consists of a number representing the CRUD operation like 
+1 - Inserting (the input should be of all attributes)
+2 - Update (should update all the attributes using the primary key)
+3 - Show all details
+and the required inputs related to the operation in the next lines
+Output format :
+The output prints the details from the table as per CRUD operation.
+Sample test cases :
+Input 1 :
+1
+105
+Lakshmi
+1234567890
+plan A
+unpaid
+Output 1 :
+Customer record inserted successfully.
+ID: 100, Name: ram, Contact Information: 1234567890, Subscription Plan: Plan A, Payment History: paid
+ID: 101, Name: teja, Contact Information: 9876543210, Subscription Plan: Plan B, Payment History: unpaid
+ID: 102, Name: abc, Contact Information: 7894561230, Subscription Plan: Plan C, Payment History: paid
+ID: 103, Name: asdf, Contact Information: 4561237890, Subscription Plan: Plan A, Payment History: paid
+ID: 104, Name: praveen, Contact Information: 3216549870, Subscription Plan: Plan B, Payment History: unpaid
+ID: 105, Name: Lakshmi, Contact Information: 1234567890, Subscription Plan: plan A, Payment History: unpaid
+Input 2 :
+2
+102
+Sureshraj
+234567567
+plan A
+paid
+Output 2 :
+Customer record updated successfully.
+ID: 100, Name: ram, Contact Information: 1234567890, Subscription Plan: Plan A, Payment History: paid
+ID: 101, Name: teja, Contact Information: 9876543210, Subscription Plan: Plan B, Payment History: unpaid
+ID: 102, Name: Sureshraj, Contact Information: 234567567, Subscription Plan: plan A, Payment History: paid
+ID: 103, Name: asdf, Contact Information: 4561237890, Subscription Plan: Plan A, Payment History: paid
+ID: 104, Name: praveen, Contact Information: 3216549870, Subscription Plan: Plan B, Payment History: unpaid
+Input 3 :
+3
+Output 3 :
+ID: 100, Name: ram, Contact Information: 1234567890, Subscription Plan: Plan A, Payment History: paid
+ID: 101, Name: teja, Contact Information: 9876543210, Subscription Plan: Plan B, Payment History: unpaid
+ID: 102, Name: abc, Contact Information: 7894561230, Subscription Plan: Plan C, Payment History: paid
+ID: 103, Name: asdf, Contact Information: 4561237890, Subscription Plan: Plan A, Payment History: paid
+ID: 104, Name: praveen, Contact Information: 3216549870, Subscription Plan: Plan B, Payment History: unpaid
+Input 4 :
+4
+Output 4 :
+Invalid operation number. Please try again.
+Default DB URL :
+jdbc:mysql://localhost/ri_db
+Default USER :
+test
+Default PWD :
+test123
+
+// You are using Java
+// You are using Java
+import java.util.*;
+import java.sql.*;
+class Main{
+    public static void main(String args[])throws Exception{
+        Scanner sc=new Scanner(System.in);
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost/ri_db","test","test123");
+        int n=Integer.parseInt(sc.nextLine());
+        if(n==1){
+           int id=Integer.parseInt(sc.nextLine());
+           String name=sc.nextLine();
+           int cont=Integer.parseInt(sc.nextLine());
+           String pl=sc.nextLine();
+           String ph=sc.nextLine();
+           PreparedStatement ps=con.prepareStatement("INSERT INTO customer VALUES (?,?,?,?,?)");
+           ps.setInt(1,id);
+           ps.setString(2,name);
+           ps.setInt(3,cont);
+           ps.setString(4,pl);
+           ps.setString(5,ph);
+           int rows=ps.executeUpdate();
+           if(rows>=1){
+               System.out.println("Customer record inserted successfully.");
+           }
+        }
+        else if(n==2){
+           int id=Integer.parseInt(sc.nextLine());
+           String name=sc.nextLine();
+           int cont=Integer.parseInt(sc.nextLine());
+           String pl=sc.nextLine();
+           String ph=sc.nextLine();
+           PreparedStatement ps=con.prepareStatement("UPDATE customer SET name=?, contact_information=?,subscription_plan=?, payment_history=? where customer_id=?");
+           ps.setInt(5,id);
+           ps.setString(1,name);
+           ps.setInt(2,cont);
+           ps.setString(3,pl);
+           ps.setString(4,ph);
+           int up=ps.executeUpdate();
+           if(up>=1){
+               System.out.println("Customer record updated successfully.");
+           }
+  
+        }
+        if(n==3 || n==2 || n==1){
+            Statement st=con.createStatement();
+            String sts="SELECT * FROM customer";
+            ResultSet rs=st.executeQuery(sts);
+            while(rs.next()){
+                System.out.print("ID: "+rs.getString("customer_id")+", ");
+                System.out.print("Name: "+rs.getString("name")+", ");
+                System.out.print("Contact Information: "+rs.getString("contact_information")+", ");
+                System.out.print("Subscription Plan: "+rs.getString("subscription_plan")+", ");
+                System.out.print("Payment History: "+rs.getString("payment_history")+"\n");
+            }
+        }
+        else{
+            System.out.println("Invalid operation number. Please try again.");
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Question No: 4
+reportIcon
+Single File Programming Question
+Write a Java (JDBC) program to print the details of the Department_Name  in lowercase from the table.
+Details for Creation of table :
+The table department should contain the (Department_ID int,Department_Name varchar(100))
+Details of the table :
+Use the below Database Credentials
+Driver Class        :           com.mysql.jdbc.Driver
+Default DB URL :            jdbc:mysql://localhost/ri_db
+Username          :            test
+Password           :            test123
+Note: All Tables and records are Prepopulated
+Input format :
+No console input
+Output format :
+The output prints the Department_Name in lowercase. Refer to the sample output for the formatting specifications.
+Sample test cases :
+Input 1 :
+Output 1 :
+administration
+pre sales
+sales
+human resources
+elon l1
+elon l2
+jarvis-stark
+jarvis
+Default DB URL :
+jdbc:mysql://localhost/ri_db
+Default USER :
+test
+Default PWD :
+test123
+
+import java.sql.*;
+
+ class DepartmentDetails {
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/ri_db";
+    static final String USER = "test";
+    static final String PASS = "test123";
+
+    public static void main(String[] args) {
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+
+            String sql = "SELECT LOWER(Department_Name) AS Department_Name FROM department";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                System.out.println(rs.getString("Department_Name"));
+            }
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

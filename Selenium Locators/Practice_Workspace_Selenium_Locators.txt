@@ -1,0 +1,65 @@
+package Demoblaze_Test;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import utils.EventHandler;
+
+import org.testng.annotations.AfterMethod;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+public class Test_demoblaze{
+    public static WebDriver driver;
+	public final int IMPLICIT_WAIT_TIME=10;
+	public final int PAGE_LOAD_TIME=5;
+@BeforeMethod
+    public WebDriver beforeMethod() throws MalformedURLException{
+		ChromeOptions chromeOptions = new ChromeOptions();
+		driver = new RemoteWebDriver(new URL("http://localhost:4444/"), chromeOptions);
+		driver.get("https://www.demoblaze.com/");
+		 WebDriverListener listener = new EventHandler();
+		driver = new EventFiringDecorator<>(listener).decorate(driver);
+		return driver;
+     
+    }
+	@Test
+	public void shouldAnswerWithTrue() throws InterruptedException
+	{
+		WebElement element = driver.findElement(By.linkText("Laptops"));
+        element.click();
+        Thread.sleep(5000);
+        driver.findElement(By.linkText("MacBook air")).click();
+        Thread.sleep(5000);
+        driver.findElement(By.linkText("Add to cart")).click();
+        Thread.sleep(2000);
+        driver.switchTo().alert().accept();
+        Thread.sleep(2000);
+        driver.findElement(By.linkText("Cart")).click();
+        Thread.sleep(5000);
+        
+        WebElement nameElement = driver.findElement(By.xpath("/html/body/div[6]/div/div[1]/div/table/tbody/tr[1]/td[2]"));
+        WebElement priceElement = driver.findElement(By.xpath("/html/body/div[6]/div/div[1]/div/table/tbody/tr[1]/td[3]"));
+        String name = nameElement.getText();
+        String price = priceElement.getText();
+        System.out.println("Name: " + name + ", Price: " + price);
+		Thread.sleep(5000);
+        driver.quit();
+	} 
+}
+    
+

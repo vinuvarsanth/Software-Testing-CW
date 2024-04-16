@@ -1,0 +1,44 @@
+2]
+
+package com.example;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest {
+    /**
+     * Rigorous Test :-)
+     */
+    @Test
+    public void shouldAnswerWithTrue() throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://www.moneycontrol.com/");
+        Thread.sleep(10000);
+        WebElement money = driver
+        .findElement(By.xpath("/html/body/div[3]/header/div[1]/div[1]/div/div/div[2]/div/div/form/input[5]"));
+        money.click();
+        money.sendKeys("Reliance Industries", Keys.ENTER);
+        Thread.sleep(10000);
+        driver.findElement(By.partialLinkText("Funds")).click();
+        Thread.sleep(1000);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,700)");
+        Thread.sleep(2000);
+        driver.findElement(By.xpath(
+        "/html/body/section/section[1]/div/div/div[1]/div[5]/div/div/div/div[1]/div/div[3]/div[1]/div[1]/ul/li[2]/a"))
+        .click();
+        ;
+        Thread.sleep(10000);
+        driver.quit();
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

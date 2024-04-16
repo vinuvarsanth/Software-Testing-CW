@@ -1,0 +1,250 @@
+1]
+Flight Reservation System 
+The Flight Reservation System will cover various functionalities related to flight reservations, including flight search, booking management, payment processing, seat selection, and ticket issuance.
+Create a Flight Entity with the Following attributes Flight ID
+TableName :  Flight
+Flight (flight_id INT NOT NULL PRIMARY KEY, flight_number VARCHAR(20) NOT NULL, airline VARCHAR(50) NOT NULL, departure_airport VARCHAR(100) NOT NULL, arrival_airport VARCHAR(100) NOT NULL, departure_time VARCHAR(50 );
+Perform below operations through Java application
+•Insert root details.
+•Update root details.
+•Show all root details.
+NOTE: The Table is created and some tuples have been already inserted into the table
+id range is between 100 to 106.
+Input format :
+The input consists of a number representing the CRUD operation like 
+1 - Inserting (the input should be of all attributes)
+2 - Update (should update all the attributes using the primary key)
+3 - Show all
+and the required inputs related to the operation in the next lines
+Output format :
+The output prints the details from the table as per CRUD operation.
+Sample test cases :
+Input 1 :
+1
+105                   
+ABC123
+Indian Airline
+Chennai
+Mumbai
+2023-06-26
+Output 1 :
+Flight record inserted successfully.
+ID: 100, Flight Number: FL001, Airline: Airline 1, Departure Airport: Airport A, Arrival Airport: Airport B, Departure Time: 2023-06-26
+ID: 101, Flight Number: FL002, Airline: Airline 2, Departure Airport: Airport C, Arrival Airport: Airport D, Departure Time: 2023-06-26
+ID: 102, Flight Number: FL003, Airline: Airline 3, Departure Airport: Airport E, Arrival Airport: Airport F, Departure Time: 2023-06-26
+ID: 103, Flight Number: FL004, Airline: Airline 4, Departure Airport: Airport G, Arrival Airport: Airport H, Departure Time: 2023-06-26
+ID: 104, Flight Number: FL005, Airline: Airline 5, Departure Airport: Airport I, Arrival Airport: Airport J, Departure Time: 2023-06-26
+ID: 105, Flight Number: ABC123, Airline: Indian Airline, Departure Airport: Chennai, Arrival Airport: Mumbai, Departure Time: 2023-06-26
+Input 2 :
+2                
+102
+ABC456
+AirIndia
+Delhi
+Chennai
+2023-06-26 
+Output 2 :
+Flight record updated successfully.
+ID: 100, Flight Number: FL001, Airline: Airline 1, Departure Airport: Airport A, Arrival Airport: Airport B, Departure Time: 2023-06-26
+ID: 101, Flight Number: FL002, Airline: Airline 2, Departure Airport: Airport C, Arrival Airport: Airport D, Departure Time: 2023-06-26
+ID: 102, Flight Number: ABC456, Airline: AirIndia, Departure Airport: Delhi, Arrival Airport: Chennai, Departure Time: 2023-06-26 
+ID: 103, Flight Number: FL004, Airline: Airline 4, Departure Airport: Airport G, Arrival Airport: Airport H, Departure Time: 2023-06-26
+ID: 104, Flight Number: FL005, Airline: Airline 5, Departure Airport: Airport I, Arrival Airport: Airport J, Departure Time: 2023-06-26
+Input 3 :
+3
+Output 3 :
+ID: 100, Flight Number: FL001, Airline: Airline 1, Departure Airport: Airport A, Arrival Airport: Airport B, Departure Time: 2023-06-26
+ID: 101, Flight Number: FL002, Airline: Airline 2, Departure Airport: Airport C, Arrival Airport: Airport D, Departure Time: 2023-06-26
+ID: 102, Flight Number: FL003, Airline: Airline 3, Departure Airport: Airport E, Arrival Airport: Airport F, Departure Time: 2023-06-26
+ID: 103, Flight Number: FL004, Airline: Airline 4, Departure Airport: Airport G, Arrival Airport: Airport H, Departure Time: 2023-06-26
+ID: 104, Flight Number: FL005, Airline: Airline 5, Departure Airport: Airport I, Arrival Airport: Airport J, Departure Time: 2023-06-26
+Input 4 :
+4
+Output 4 :
+Invalid operation number. Please try again.
+Default DB URL :
+jdbc:mysql://localhost/ri_db
+Default USER :
+test
+Default PWD :
+test123
+
+import java.sql.*;
+
+public class Main {
+
+    private static final String DB_URL = "jdbc:mysql://localhost/ri_db";
+    private static final String DB_USER = "test";
+    private static final String DB_PASSWORD = "test123";
+
+    public static void main(String[] args) {
+        try {
+            // Connect to the database
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+
+            // Create a statement
+            Statement statement = connection.createStatement();
+
+            // Get user input
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            int operation = scanner.nextInt();
+
+            if (operation == 1) {
+                // Insert operation
+                int flightId = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+                String flightNumber = scanner.nextLine();
+                String airline = scanner.nextLine();
+                String departureAirport = scanner.nextLine();
+                String arrivalAirport = scanner.nextLine();
+                String departureTime = scanner.nextLine();
+
+                // Execute the insert query
+                String insertQuery = "INSERT INTO Flight (flight_id, flight_number, airline, departure_airport, arrival_airport, departure_time) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+                insertStatement.setInt(1, flightId);
+                insertStatement.setString(2, flightNumber);
+                insertStatement.setString(3, airline);
+                insertStatement.setString(4, departureAirport);
+                insertStatement.setString(5, arrivalAirport);
+                insertStatement.setString(6, departureTime);
+                insertStatement.executeUpdate();
+
+                System.out.println("Flight record inserted successfully.");
+                displayAllFlights(statement);
+            } else if (operation == 2) {
+                // Update operation
+                int flightId = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+                String flightNumber = scanner.nextLine();
+                String airline = scanner.nextLine();
+                String departureAirport = scanner.nextLine();
+                String arrivalAirport = scanner.nextLine();
+                String departureTime = scanner.nextLine();
+
+                // Execute the update query
+                String updateQuery = "UPDATE Flight SET flight_number = ?, airline = ?, departure_airport = ?, arrival_airport = ?, departure_time = ? WHERE flight_id = ?";
+                PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+                updateStatement.setString(1, flightNumber);
+                updateStatement.setString(2, airline);
+                updateStatement.setString(3, departureAirport);
+                updateStatement.setString(4, arrivalAirport);
+                updateStatement.setString(5, departureTime);
+                updateStatement.setInt(6, flightId);
+                int rowsUpdated = updateStatement.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    System.out.println("Flight record updated successfully.");
+                    displayAllFlights(statement);
+                } else {
+                    System.out.println("No flight record found with the given ID.");
+                }
+            }  else if (operation == 3) {
+                // Display all operation
+                displayAllFlights(statement);
+            } else {
+                System.out.println("Invalid operation number. Please try again.");
+            }
+
+            // Close the resources
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void displayAllFlights(Statement statement) throws SQLException {
+        String selectQuery = "SELECT * FROM Flight";
+        ResultSet resultSet = statement.executeQuery(selectQuery);
+
+        // Iterate over the result set and print the flight records
+        while (resultSet.next()) {
+            int flightId = resultSet.getInt("flight_id");
+            String flightNumber = resultSet.getString("flight_number");
+            String airline = resultSet.getString("airline");
+            String departureAirport = resultSet.getString("departure_airport");
+            String arrivalAirport = resultSet.getString("arrival_airport");
+            String departureTime = resultSet.getString("departure_time");
+
+            System.out.println("ID: " + flightId + ", Flight Number: " + flightNumber + ", Airline: " + airline + ", Departure Airport: " + departureAirport + ", Arrival Airport: " + arrivalAirport + ", Departure Time: " + departureTime);
+        }
+
+        resultSet.close();
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2]
+Write a Java (JDBC) program to print the details of the Department_Name  in lowercase from the table.
+Details for Creation of table :
+The table department should contain the (Department_ID int,Department_Name varchar(100))
+Details of the table :
+Use the below Database Credentials
+Driver Class        :           com.mysql.jdbc.Driver
+Default DB URL :            jdbc:mysql://localhost/ri_db
+Username          :            test
+Password           :            test123
+Note: All Tables and records are Prepopulated
+Input format :
+No console input
+Output format :
+The output prints the Department_Name in lowercase. Refer to the sample output for the formatting specifications.
+Sample test cases :
+Input 1 :
+Output 1 :
+administration
+pre sales
+sales
+human resources
+elon l1
+elon l2
+jarvis-stark
+jarvis
+Default DB URL :
+jdbc:mysql://localhost/ri_db
+Default USER :
+test
+Default PWD :
+test123
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Scanner;
+import java.io.DataInputStream;
+import java.sql.Statement;
+import java.sql.*;
+
+class Department
+{
+    public static void main (String args[]) throws Exception 
+    {
+        String url = "jdbc:mysql://localhost/ri_db";
+        String username = "test";
+        String password ="test123";
+        
+        
+      Class.forName("com.mysql.jdbc.Driver");
+      Connection con = DriverManager.getConnection(url,username,password);
+      Statement stmt=con.createStatement();
+ 
+         try
+         {
+
+            ResultSet rs=stmt.executeQuery("select lower(department_Name)from department");
+            while(rs.next())
+            {
+                System.out.print(rs.getString(1)+"\n");
+            }
+        }
+        catch(Exception e)
+        { 
+            System.out.println(e);
+            
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
